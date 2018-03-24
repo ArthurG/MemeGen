@@ -19,9 +19,10 @@ for url, score in zip(df["url"], df["score"]):
         img = "{}_{}.jpg".format(t, score)
     elif url.endswith(".png"):
         img = "{}_{}.jpg".format(t, score)
-    download(url, img)
-
-    data = open('photos/'+img, 'rb')
-    s3.Bucket('arthur-memes').put_object(Key=img, Body=data)
-    imgs.append(img)
+    try:
+        download(url, img)
+        data = open('photos/' + img, 'rb')
+        s3.Bucket("arthur-memes").put_object(Key=img, Body=data)
+    except:
+        print('An error occurred.')
 
